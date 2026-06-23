@@ -1,6 +1,6 @@
 import type { Meta, StoryObj } from "@storybook/react-vite";
-import { Sidebar } from "@voila/ui";
 import { GearIcon, HouseIcon, UserIcon } from "@voila/ui/icons";
+import { Sidebar } from "@voila/ui/sidebar";
 
 const meta: Meta = {
   title: "Primitives/Sidebar",

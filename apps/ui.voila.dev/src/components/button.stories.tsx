@@ -1,5 +1,5 @@
 import type { Meta, StoryObj } from "@storybook/react-vite";
-import { Button } from "@voila/ui";
+import { Button } from "@voila/ui/button";
 import { ArrowRightIcon } from "@voila/ui/icons";
 
 const meta: Meta<typeof Button> = {

@@ -1,5 +1,6 @@
 import type { Meta, StoryObj } from "@storybook/react-vite";
-import { ScrollArea, Separator } from "@voila/ui";
+import { ScrollArea } from "@voila/ui/scroll-area";
+import { Separator } from "@voila/ui/separator";
 
 const meta: Meta = {
   title: "Primitives/ScrollArea",

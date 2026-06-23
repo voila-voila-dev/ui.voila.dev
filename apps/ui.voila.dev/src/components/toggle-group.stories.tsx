@@ -1,6 +1,6 @@
 import type { Meta, StoryObj } from "@storybook/react-vite";
-import { ToggleGroup } from "@voila/ui";
 import { TextAlignCenterIcon, TextAlignLeftIcon, TextAlignRightIcon } from "@voila/ui/icons";
+import { ToggleGroup } from "@voila/ui/toggle-group";
 
 const meta: Meta = {
   title: "Primitives/ToggleGroup",

@@ -1,5 +1,6 @@
 import type { Meta, StoryObj } from "@storybook/react-vite";
-import { Button, Tooltip } from "@voila/ui";
+import { Button } from "@voila/ui/button";
+import { Tooltip } from "@voila/ui/tooltip";
 
 const meta: Meta = {
   title: "Primitives/Tooltip",

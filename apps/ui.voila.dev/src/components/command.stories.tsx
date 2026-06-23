@@ -1,5 +1,5 @@
 import type { Meta, StoryObj } from "@storybook/react-vite";
-import { Command } from "@voila/ui";
+import { Command } from "@voila/ui/command";
 
 const meta: Meta = {
   title: "Primitives/Command",

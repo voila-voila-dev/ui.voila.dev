@@ -1,5 +1,6 @@
 import type { Meta, StoryObj } from "@storybook/react-vite";
-import { Input, Label } from "@voila/ui";
+import { Input } from "@voila/ui/input";
+import { Label } from "@voila/ui/label";
 
 const meta: Meta<typeof Input> = {
   title: "Primitives/Input",

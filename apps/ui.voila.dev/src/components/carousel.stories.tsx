@@ -1,5 +1,6 @@
 import type { Meta, StoryObj } from "@storybook/react-vite";
-import { Card, Carousel } from "@voila/ui";
+import { Card } from "@voila/ui/card";
+import { Carousel } from "@voila/ui/carousel";
 
 const meta: Meta = {
   title: "Primitives/Carousel",

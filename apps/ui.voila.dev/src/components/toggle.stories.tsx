@@ -1,6 +1,6 @@
 import type { Meta, StoryObj } from "@storybook/react-vite";
-import { Toggle } from "@voila/ui";
 import { TextBolderIcon } from "@voila/ui/icons";
+import { Toggle } from "@voila/ui/toggle";
 
 const meta: Meta<typeof Toggle> = {
   title: "Primitives/Toggle",

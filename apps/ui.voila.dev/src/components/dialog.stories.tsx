@@ -1,5 +1,8 @@
 import type { Meta, StoryObj } from "@storybook/react-vite";
-import { Button, Dialog, Input, Label } from "@voila/ui";
+import { Button } from "@voila/ui/button";
+import { Dialog } from "@voila/ui/dialog";
+import { Input } from "@voila/ui/input";
+import { Label } from "@voila/ui/label";
 
 const meta: Meta = {
   title: "Primitives/Dialog",

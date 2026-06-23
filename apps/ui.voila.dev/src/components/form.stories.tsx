@@ -1,5 +1,7 @@
 import type { Meta, StoryObj } from "@storybook/react-vite";
-import { Button, Form, Input } from "@voila/ui";
+import { Button } from "@voila/ui/button";
+import { Form } from "@voila/ui/form";
+import { Input } from "@voila/ui/input";
 import { useForm } from "react-hook-form";
 
 const meta: Meta = {

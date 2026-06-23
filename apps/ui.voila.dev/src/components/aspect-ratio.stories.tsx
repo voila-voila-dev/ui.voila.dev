@@ -1,5 +1,5 @@
 import type { Meta, StoryObj } from "@storybook/react-vite";
-import { AspectRatio } from "@voila/ui";
+import { AspectRatio } from "@voila/ui/aspect-ratio";
 
 const meta: Meta<typeof AspectRatio> = {
   title: "Primitives/AspectRatio",

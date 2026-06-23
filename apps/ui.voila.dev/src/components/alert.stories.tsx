@@ -1,5 +1,5 @@
 import type { Meta, StoryObj } from "@storybook/react-vite";
-import { Alert } from "@voila/ui";
+import { Alert } from "@voila/ui/alert";
 import { InfoIcon, WarningIcon } from "@voila/ui/icons";
 
 const meta: Meta = {

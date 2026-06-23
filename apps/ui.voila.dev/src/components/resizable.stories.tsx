@@ -1,5 +1,5 @@
 import type { Meta, StoryObj } from "@storybook/react-vite";
-import { Resizable } from "@voila/ui";
+import { Resizable } from "@voila/ui/resizable";
 
 const meta: Meta = {
   title: "Primitives/Resizable",

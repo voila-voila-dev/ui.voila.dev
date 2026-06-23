@@ -1,5 +1,5 @@
 import type { Meta, StoryObj } from "@storybook/react-vite";
-import { Chart, type ChartConfig } from "@voila/ui";
+import { Chart, type ChartConfig } from "@voila/ui/chart";
 import { Bar, BarChart, CartesianGrid, XAxis } from "recharts";
 
 const meta: Meta = {
