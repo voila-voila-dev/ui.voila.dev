@@ -103,6 +103,7 @@ function Root({
     >
       {/* biome-ignore lint/a11y/useSemanticElements: carousel WAI-ARIA pattern requires role="region" + aria-roledescription */}
       <div
+        data-slot="carousel"
         onKeyDownCapture={handleKeyDown}
         className={cn("relative", className)}
         role="region"
@@ -118,8 +119,9 @@ function Root({
 function Content({ className, ...props }: React.ComponentProps<"div">) {
   const { carouselRef, orientation } = useCarousel();
   return (
-    <div ref={carouselRef} className="overflow-hidden">
+    <div ref={carouselRef} data-slot="carousel-content" className="overflow-hidden">
       <div
+        data-slot="carousel-track"
         className={cn("flex", orientation === "horizontal" ? "-ml-4" : "-mt-4 flex-col", className)}
         {...props}
       />
@@ -132,6 +134,7 @@ function Item({ className, ...props }: React.ComponentProps<"div">) {
   return (
     // biome-ignore lint/a11y/useSemanticElements: carousel WAI-ARIA pattern requires role="group" + aria-roledescription
     <div
+      data-slot="carousel-item"
       role="group"
       aria-roledescription="slide"
       className={cn(
@@ -153,6 +156,7 @@ function Previous({
   const { orientation, scrollPrev, canScrollPrev } = useCarousel();
   return (
     <Button
+      data-slot="carousel-previous"
       variant={variant}
       size={size}
       className={cn(
@@ -181,6 +185,7 @@ function Next({
   const { orientation, scrollNext, canScrollNext } = useCarousel();
   return (
     <Button
+      data-slot="carousel-next"
       variant={variant}
       size={size}
       className={cn(

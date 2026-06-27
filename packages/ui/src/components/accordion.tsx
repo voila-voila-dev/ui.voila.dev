@@ -1,22 +1,26 @@
-import { Accordion as BaseAccordion } from "@base-ui-components/react/accordion";
+import { Accordion as AccordionPrimitive } from "@base-ui/react/accordion";
 import { CaretDownIcon } from "@phosphor-icons/react";
-import type * as React from "react";
 import { cn } from "#lib/cn";
 
-const Root = BaseAccordion.Root;
-
-function Item({ className, ...props }: React.ComponentProps<typeof BaseAccordion.Item>) {
-  return <BaseAccordion.Item className={cn("border-b", className)} {...props} />;
+function Root({ ...props }: AccordionPrimitive.Root.Props) {
+  return <AccordionPrimitive.Root data-slot="accordion" {...props} />;
 }
 
-function Trigger({
-  className,
-  children,
-  ...props
-}: React.ComponentProps<typeof BaseAccordion.Trigger>) {
+function Item({ className, ...props }: AccordionPrimitive.Item.Props) {
   return (
-    <BaseAccordion.Header className="flex">
-      <BaseAccordion.Trigger
+    <AccordionPrimitive.Item
+      data-slot="accordion-item"
+      className={cn("border-b", className)}
+      {...props}
+    />
+  );
+}
+
+function Trigger({ className, children, ...props }: AccordionPrimitive.Trigger.Props) {
+  return (
+    <AccordionPrimitive.Header className="flex">
+      <AccordionPrimitive.Trigger
+        data-slot="accordion-trigger"
         className={cn(
           "flex flex-1 items-center justify-between py-4 text-sm font-medium transition-all hover:underline [&[data-panel-open]>svg]:rotate-180",
           className,
@@ -25,23 +29,20 @@ function Trigger({
       >
         {children}
         <CaretDownIcon className="h-4 w-4 shrink-0 text-muted-foreground transition-transform duration-200" />
-      </BaseAccordion.Trigger>
-    </BaseAccordion.Header>
+      </AccordionPrimitive.Trigger>
+    </AccordionPrimitive.Header>
   );
 }
 
-function Content({
-  className,
-  children,
-  ...props
-}: React.ComponentProps<typeof BaseAccordion.Panel>) {
+function Content({ className, children, ...props }: AccordionPrimitive.Panel.Props) {
   return (
-    <BaseAccordion.Panel
-      className="overflow-hidden text-sm transition-[height] duration-200 ease-out data-[ending-style]:h-0 data-[starting-style]:h-0"
+    <AccordionPrimitive.Panel
+      data-slot="accordion-content"
+      className="h-(--accordion-panel-height) overflow-hidden text-sm transition-[height] duration-200 ease-out data-ending-style:h-0 data-starting-style:h-0"
       {...props}
     >
       <div className={cn("pb-4 pt-0", className)}>{children}</div>
-    </BaseAccordion.Panel>
+    </AccordionPrimitive.Panel>
   );
 }
 

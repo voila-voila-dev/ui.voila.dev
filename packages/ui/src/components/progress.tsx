@@ -1,21 +1,23 @@
-import { Progress as BaseProgress } from "@base-ui-components/react/progress";
-import type * as React from "react";
+import { Progress as ProgressPrimitive } from "@base-ui/react/progress";
 import { cn } from "#lib/cn";
 
-export function Progress({
-  className,
-  value,
-  ...props
-}: React.ComponentProps<typeof BaseProgress.Root>) {
+export function Progress({ className, value, ...props }: ProgressPrimitive.Root.Props) {
   return (
-    <BaseProgress.Root
+    <ProgressPrimitive.Root
+      data-slot="progress"
       value={value}
       className={cn("relative w-full overflow-hidden", className)}
       {...props}
     >
-      <BaseProgress.Track className="block h-2 w-full overflow-hidden rounded-full bg-primary/20">
-        <BaseProgress.Indicator className="block h-full bg-primary transition-all" />
-      </BaseProgress.Track>
-    </BaseProgress.Root>
+      <ProgressPrimitive.Track
+        data-slot="progress-track"
+        className="block h-2 w-full overflow-hidden rounded-full bg-primary/20"
+      >
+        <ProgressPrimitive.Indicator
+          data-slot="progress-indicator"
+          className="block h-full bg-primary transition-all"
+        />
+      </ProgressPrimitive.Track>
+    </ProgressPrimitive.Root>
   );
 }

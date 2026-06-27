@@ -1,28 +1,54 @@
-import { Menu } from "@base-ui-components/react/menu";
+import { Menu as MenuPrimitive } from "@base-ui/react/menu";
 import { CaretRightIcon, CheckIcon, CircleIcon } from "@phosphor-icons/react";
 import type * as React from "react";
 import { cn } from "#lib/cn";
+import {
+  menuContentVariants,
+  menuIndicatorVariants,
+  menuItemVariants,
+  menuLabelVariants,
+  menuSeparatorVariants,
+  menuShortcutVariants,
+} from "./menu-variants";
 
 // Base UI exposes this as `Menu`; shadcn calls it `DropdownMenu`. We keep the
 // shadcn names so component imports stay familiar.
 
-const Root = Menu.Root;
-const Trigger = Menu.Trigger;
-const Group = Menu.Group;
-const Portal = Menu.Portal;
-const Sub = Menu.SubmenuRoot;
-const RadioGroup = Menu.RadioGroup;
+function Root({ ...props }: MenuPrimitive.Root.Props) {
+  return <MenuPrimitive.Root data-slot="dropdown-menu" {...props} />;
+}
+
+function Trigger({ ...props }: MenuPrimitive.Trigger.Props) {
+  return <MenuPrimitive.Trigger data-slot="dropdown-menu-trigger" {...props} />;
+}
+
+function Group({ ...props }: MenuPrimitive.Group.Props) {
+  return <MenuPrimitive.Group data-slot="dropdown-menu-group" {...props} />;
+}
+
+function Portal({ ...props }: MenuPrimitive.Portal.Props) {
+  return <MenuPrimitive.Portal data-slot="dropdown-menu-portal" {...props} />;
+}
+
+function Sub({ ...props }: MenuPrimitive.SubmenuRoot.Props) {
+  return <MenuPrimitive.SubmenuRoot data-slot="dropdown-menu-sub" {...props} />;
+}
+
+function RadioGroup({ ...props }: MenuPrimitive.RadioGroup.Props) {
+  return <MenuPrimitive.RadioGroup data-slot="dropdown-menu-radio-group" {...props} />;
+}
 
 function SubTrigger({
   className,
   inset,
   children,
   ...props
-}: React.ComponentProps<typeof Menu.SubmenuTrigger> & { inset?: boolean }) {
+}: MenuPrimitive.SubmenuTrigger.Props & { inset?: boolean }) {
   return (
-    <Menu.SubmenuTrigger
+    <MenuPrimitive.SubmenuTrigger
+      data-slot="dropdown-menu-sub-trigger"
       className={cn(
-        "flex cursor-default gap-2 select-none items-center rounded-sm px-2 py-1.5 text-sm outline-none focus:bg-accent data-[popup-open]:bg-accent [&_svg]:pointer-events-none [&_svg]:size-4 [&_svg]:shrink-0",
+        "flex cursor-default gap-2 select-none items-center rounded-sm px-2 py-1.5 text-sm outline-none focus:bg-accent data-popup-open:bg-accent [&_svg]:pointer-events-none [&_svg]:size-4 [&_svg]:shrink-0",
         inset && "pl-8",
         className,
       )}
@@ -30,59 +56,69 @@ function SubTrigger({
     >
       {children}
       <CaretRightIcon className="ml-auto" />
-    </Menu.SubmenuTrigger>
+    </MenuPrimitive.SubmenuTrigger>
   );
 }
 
-function SubContent({ className, ...props }: React.ComponentProps<typeof Menu.Popup>) {
+function SubContent({ className, ...props }: MenuPrimitive.Popup.Props) {
   return (
-    <Menu.Portal>
-      <Menu.Positioner>
-        <Menu.Popup
-          className={cn(
-            "z-50 min-w-[8rem] overflow-hidden rounded-md border bg-popover p-1 text-popover-foreground shadow-lg transition-all duration-200 data-[ending-style]:opacity-0 data-[starting-style]:opacity-0 data-[ending-style]:scale-95 data-[starting-style]:scale-95",
-            className,
-          )}
+    <MenuPrimitive.Portal>
+      <MenuPrimitive.Positioner>
+        <MenuPrimitive.Popup
+          data-slot="dropdown-menu-sub-content"
+          className={cn(menuContentVariants(), "shadow-lg", className)}
           {...props}
         />
-      </Menu.Positioner>
-    </Menu.Portal>
+      </MenuPrimitive.Positioner>
+    </MenuPrimitive.Portal>
   );
 }
 
 function Content({
   className,
-  sideOffset = 4,
   align,
+  alignOffset,
+  side,
+  sideOffset = 4,
+  positionerProps,
   ...props
-}: React.ComponentProps<typeof Menu.Popup> & {
-  sideOffset?: React.ComponentProps<typeof Menu.Positioner>["sideOffset"];
-  align?: React.ComponentProps<typeof Menu.Positioner>["align"];
-}) {
+}: MenuPrimitive.Popup.Props &
+  Pick<MenuPrimitive.Positioner.Props, "align" | "alignOffset" | "side" | "sideOffset"> & {
+    // Escape hatch for the Positioner props not surfaced as dedicated props
+    // (collisionPadding, sticky, anchor, positionMethod, arrowPadding...).
+    positionerProps?: Omit<
+      MenuPrimitive.Positioner.Props,
+      "align" | "alignOffset" | "side" | "sideOffset" | "children"
+    >;
+  }) {
+  const { className: positionerClassName, ...restPositionerProps } = positionerProps ?? {};
   return (
-    <Menu.Portal>
-      <Menu.Positioner sideOffset={sideOffset} align={align}>
-        <Menu.Popup
-          className={cn(
-            "z-50 min-w-[8rem] overflow-hidden rounded-md border bg-popover p-1 text-popover-foreground shadow-md transition-all duration-200 data-[ending-style]:opacity-0 data-[starting-style]:opacity-0 data-[ending-style]:scale-95 data-[starting-style]:scale-95",
-            className,
-          )}
+    <MenuPrimitive.Portal>
+      <MenuPrimitive.Positioner
+        align={align}
+        alignOffset={alignOffset}
+        side={side}
+        sideOffset={sideOffset}
+        className={positionerClassName}
+        {...restPositionerProps}
+      >
+        <MenuPrimitive.Popup
+          data-slot="dropdown-menu-content"
+          className={cn(menuContentVariants(), className)}
           {...props}
         />
-      </Menu.Positioner>
-    </Menu.Portal>
+      </MenuPrimitive.Positioner>
+    </MenuPrimitive.Portal>
   );
 }
 
-function Item({
-  className,
-  inset,
-  ...props
-}: React.ComponentProps<typeof Menu.Item> & { inset?: boolean }) {
+function Item({ className, inset, ...props }: MenuPrimitive.Item.Props & { inset?: boolean }) {
   return (
-    <Menu.Item
+    <MenuPrimitive.Item
+      data-slot="dropdown-menu-item"
       className={cn(
-        "relative flex cursor-default select-none items-center gap-2 rounded-sm px-2 py-1.5 text-sm outline-none transition-colors data-[highlighted]:bg-accent data-[highlighted]:text-accent-foreground data-[disabled]:pointer-events-none data-[disabled]:opacity-50 [&_svg]:pointer-events-none [&_svg]:size-4 [&_svg]:shrink-0",
+        menuItemVariants(),
+        "gap-2 transition-colors [&_svg]:pointer-events-none [&_svg]:size-4 [&_svg]:shrink-0",
         inset && "pl-8",
         className,
       )}
@@ -96,65 +132,71 @@ function CheckboxItem({
   children,
   checked,
   ...props
-}: React.ComponentProps<typeof Menu.CheckboxItem>) {
+}: MenuPrimitive.CheckboxItem.Props) {
   return (
-    <Menu.CheckboxItem
+    <MenuPrimitive.CheckboxItem
+      data-slot="dropdown-menu-checkbox-item"
       checked={checked}
-      className={cn(
-        "relative flex cursor-default select-none items-center rounded-sm py-1.5 pl-8 pr-2 text-sm outline-none transition-colors data-[highlighted]:bg-accent data-[highlighted]:text-accent-foreground data-[disabled]:pointer-events-none data-[disabled]:opacity-50",
-        className,
-      )}
+      className={cn(menuItemVariants({ indicator: "start" }), "transition-colors", className)}
       {...props}
     >
-      <span className="absolute left-2 flex h-3.5 w-3.5 items-center justify-center">
-        <Menu.CheckboxItemIndicator>
+      <span data-slot="dropdown-menu-checkbox-item-indicator" className={menuIndicatorVariants()}>
+        <MenuPrimitive.CheckboxItemIndicator>
           <CheckIcon className="h-4 w-4" weight="bold" />
-        </Menu.CheckboxItemIndicator>
+        </MenuPrimitive.CheckboxItemIndicator>
       </span>
       {children}
-    </Menu.CheckboxItem>
+    </MenuPrimitive.CheckboxItem>
   );
 }
 
-function RadioItem({ className, children, ...props }: React.ComponentProps<typeof Menu.RadioItem>) {
+function RadioItem({ className, children, ...props }: MenuPrimitive.RadioItem.Props) {
   return (
-    <Menu.RadioItem
-      className={cn(
-        "relative flex cursor-default select-none items-center rounded-sm py-1.5 pl-8 pr-2 text-sm outline-none transition-colors data-[highlighted]:bg-accent data-[highlighted]:text-accent-foreground data-[disabled]:pointer-events-none data-[disabled]:opacity-50",
-        className,
-      )}
+    <MenuPrimitive.RadioItem
+      data-slot="dropdown-menu-radio-item"
+      className={cn(menuItemVariants({ indicator: "start" }), "transition-colors", className)}
       {...props}
     >
-      <span className="absolute left-2 flex h-3.5 w-3.5 items-center justify-center">
-        <Menu.RadioItemIndicator>
+      <span data-slot="dropdown-menu-radio-item-indicator" className={menuIndicatorVariants()}>
+        <MenuPrimitive.RadioItemIndicator>
           <CircleIcon className="h-2 w-2" weight="fill" />
-        </Menu.RadioItemIndicator>
+        </MenuPrimitive.RadioItemIndicator>
       </span>
       {children}
-    </Menu.RadioItem>
+    </MenuPrimitive.RadioItem>
   );
 }
 
-function Label({
-  className,
-  inset,
-  ...props
-}: React.ComponentProps<typeof Menu.GroupLabel> & { inset?: boolean }) {
+// Plain div, not Menu.GroupLabel: Base UI's GroupLabel throws when rendered
+// outside a Menu.Group, and labels are routinely used standalone.
+function Label({ className, inset, ...props }: React.ComponentProps<"div"> & { inset?: boolean }) {
   return (
-    <Menu.GroupLabel
-      className={cn("px-2 py-1.5 text-sm font-semibold", inset && "pl-8", className)}
+    <div
+      data-slot="dropdown-menu-label"
+      data-inset={inset}
+      className={cn(menuLabelVariants(), inset && "pl-8", className)}
       {...props}
     />
   );
 }
 
-function Separator({ className, ...props }: React.ComponentProps<typeof Menu.Separator>) {
-  return <Menu.Separator className={cn("-mx-1 my-1 h-px bg-muted", className)} {...props} />;
+function Separator({ className, ...props }: MenuPrimitive.Separator.Props) {
+  return (
+    <MenuPrimitive.Separator
+      data-slot="dropdown-menu-separator"
+      className={cn(menuSeparatorVariants(), className)}
+      {...props}
+    />
+  );
 }
 
 function Shortcut({ className, ...props }: React.ComponentProps<"span">) {
   return (
-    <span className={cn("ml-auto text-xs tracking-widest opacity-60", className)} {...props} />
+    <span
+      data-slot="dropdown-menu-shortcut"
+      className={cn(menuShortcutVariants(), "opacity-60", className)}
+      {...props}
+    />
   );
 }
 

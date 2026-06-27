@@ -1,10 +1,10 @@
-import { Dialog as BaseDialog } from "@base-ui-components/react/dialog";
+import { Dialog as DialogPrimitive } from "@base-ui/react/dialog";
 import * as React from "react";
 import { cn } from "#lib/cn";
 
 const DrawerContext = React.createContext<{ close: () => void } | null>(null);
 
-interface RootProps extends React.ComponentProps<typeof BaseDialog.Root> {}
+interface RootProps extends DialogPrimitive.Root.Props {}
 
 function Root({ open, defaultOpen, onOpenChange, ...props }: RootProps) {
   const [internalOpen, setInternalOpen] = React.useState(defaultOpen ?? false);
@@ -23,18 +23,32 @@ function Root({ open, defaultOpen, onOpenChange, ...props }: RootProps) {
 
   return (
     <DrawerContext.Provider value={{ close }}>
-      <BaseDialog.Root open={currentOpen} onOpenChange={handleOpenChange} {...props} />
+      <DialogPrimitive.Root
+        data-slot="drawer"
+        open={currentOpen}
+        onOpenChange={handleOpenChange}
+        {...props}
+      />
     </DrawerContext.Provider>
   );
 }
 
-const Trigger = BaseDialog.Trigger;
-const Portal = BaseDialog.Portal;
-const Close = BaseDialog.Close;
+function Trigger({ ...props }: DialogPrimitive.Trigger.Props) {
+  return <DialogPrimitive.Trigger data-slot="drawer-trigger" {...props} />;
+}
 
-function Overlay({ className, ...props }: React.ComponentProps<typeof BaseDialog.Backdrop>) {
+function Portal({ ...props }: DialogPrimitive.Portal.Props) {
+  return <DialogPrimitive.Portal data-slot="drawer-portal" {...props} />;
+}
+
+function Close({ ...props }: DialogPrimitive.Close.Props) {
+  return <DialogPrimitive.Close data-slot="drawer-close" {...props} />;
+}
+
+function Overlay({ className, ...props }: DialogPrimitive.Backdrop.Props) {
   return (
-    <BaseDialog.Backdrop
+    <DialogPrimitive.Backdrop
+      data-slot="drawer-overlay"
       className={cn(
         "fixed inset-0 z-50 bg-black/80 transition-opacity duration-200 data-ending-style:opacity-0 data-starting-style:opacity-0",
         className,
@@ -48,7 +62,7 @@ function Overlay({ className, ...props }: React.ComponentProps<typeof BaseDialog
 const DISMISS_DISTANCE = 100;
 const DISMISS_VELOCITY = 0.5;
 
-function Content({ className, children, ...props }: React.ComponentProps<typeof BaseDialog.Popup>) {
+function Content({ className, children, ...props }: DialogPrimitive.Popup.Props) {
   const ctx = React.useContext(DrawerContext);
   const popupRef = React.useRef<HTMLDivElement>(null);
   const dragState = React.useRef<{ startY: number; startTime: number; pointerId: number } | null>(
@@ -83,8 +97,9 @@ function Content({ className, children, ...props }: React.ComponentProps<typeof 
   return (
     <Portal>
       <Overlay />
-      <BaseDialog.Popup
+      <DialogPrimitive.Popup
         ref={popupRef}
+        data-slot="drawer-content"
         className={cn(
           "fixed inset-x-0 bottom-0 z-50 mt-24 flex h-auto flex-col rounded-t-[10px] border border-border bg-background data-ending-style:translate-y-full data-starting-style:translate-y-full",
           dragOffset === 0 && "transition-transform duration-300",
@@ -94,6 +109,7 @@ function Content({ className, children, ...props }: React.ComponentProps<typeof 
         {...props}
       >
         <div
+          data-slot="drawer-handle"
           className="mx-auto mt-4 h-2 w-[100px] shrink-0 cursor-grab touch-none rounded-full bg-muted active:cursor-grabbing"
           onPointerDown={handlePointerDown}
           onPointerMove={handlePointerMove}
@@ -101,31 +117,48 @@ function Content({ className, children, ...props }: React.ComponentProps<typeof 
           onPointerCancel={handlePointerUp}
         />
         {children}
-      </BaseDialog.Popup>
+      </DialogPrimitive.Popup>
     </Portal>
   );
 }
 
 function Header({ className, ...props }: React.ComponentProps<"div">) {
-  return <div className={cn("grid gap-1.5 p-4 text-center sm:text-left", className)} {...props} />;
+  return (
+    <div
+      data-slot="drawer-header"
+      className={cn("grid gap-1.5 p-4 text-center sm:text-left", className)}
+      {...props}
+    />
+  );
 }
 
 function Footer({ className, ...props }: React.ComponentProps<"div">) {
-  return <div className={cn("mt-auto flex flex-col gap-2 p-4", className)} {...props} />;
+  return (
+    <div
+      data-slot="drawer-footer"
+      className={cn("mt-auto flex flex-col gap-2 p-4", className)}
+      {...props}
+    />
+  );
 }
 
-function Title({ className, ...props }: React.ComponentProps<typeof BaseDialog.Title>) {
+function Title({ className, ...props }: DialogPrimitive.Title.Props) {
   return (
-    <BaseDialog.Title
+    <DialogPrimitive.Title
+      data-slot="drawer-title"
       className={cn("text-lg font-semibold leading-none tracking-tight", className)}
       {...props}
     />
   );
 }
 
-function Description({ className, ...props }: React.ComponentProps<typeof BaseDialog.Description>) {
+function Description({ className, ...props }: DialogPrimitive.Description.Props) {
   return (
-    <BaseDialog.Description className={cn("text-sm text-muted-foreground", className)} {...props} />
+    <DialogPrimitive.Description
+      data-slot="drawer-description"
+      className={cn("text-sm text-muted-foreground", className)}
+      {...props}
+    />
   );
 }
 

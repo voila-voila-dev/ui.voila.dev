@@ -6,6 +6,7 @@ import { cn } from "#lib/cn";
 function Root({ className, containerClassName, ...props }: React.ComponentProps<typeof OTPInput>) {
   return (
     <OTPInput
+      data-slot="input-otp"
       containerClassName={cn(
         "flex items-center gap-2 has-[:disabled]:opacity-50",
         containerClassName,
@@ -17,7 +18,9 @@ function Root({ className, containerClassName, ...props }: React.ComponentProps<
 }
 
 function Group({ className, ...props }: React.ComponentProps<"div">) {
-  return <div className={cn("flex items-center", className)} {...props} />;
+  return (
+    <div data-slot="input-otp-group" className={cn("flex items-center", className)} {...props} />
+  );
 }
 
 function Slot({ index, className, ...props }: React.ComponentProps<"div"> & { index: number }) {
@@ -28,6 +31,7 @@ function Slot({ index, className, ...props }: React.ComponentProps<"div"> & { in
   const isActive = slot?.isActive;
   return (
     <div
+      data-slot="input-otp-slot"
       className={cn(
         "relative flex h-9 w-9 items-center justify-center border-y border-r border-input text-sm shadow-sm transition-all first:rounded-l-md first:border-l last:rounded-r-md",
         isActive && "z-10 ring-1 ring-ring",
@@ -47,7 +51,7 @@ function Slot({ index, className, ...props }: React.ComponentProps<"div"> & { in
 
 function Separator(props: React.ComponentProps<"div">) {
   return (
-    <div aria-hidden="true" {...props}>
+    <div data-slot="input-otp-separator" aria-hidden="true" {...props}>
       <MinusIcon />
     </div>
   );
