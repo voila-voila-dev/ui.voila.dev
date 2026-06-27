@@ -1,5 +1,5 @@
 import type { Meta, StoryObj } from "@storybook/react-vite";
-import { Pagination } from "@voila/ui";
+import { Pagination } from "@voila/ui/pagination";
 
 const meta: Meta = {
   title: "Primitives/Pagination",

@@ -1,5 +1,6 @@
 import type { Meta, StoryObj } from "@storybook/react-vite";
-import { Label, RadioGroup } from "@voila/ui";
+import { Label } from "@voila/ui/label";
+import { RadioGroup } from "@voila/ui/radio-group";
 
 const meta: Meta = {
   title: "Primitives/RadioGroup",

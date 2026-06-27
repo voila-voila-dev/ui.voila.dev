@@ -1,5 +1,5 @@
 import type { Meta, StoryObj } from "@storybook/react-vite";
-import { NavigationMenu } from "@voila/ui";
+import { NavigationMenu } from "@voila/ui/navigation-menu";
 
 const meta: Meta = {
   title: "Primitives/NavigationMenu",

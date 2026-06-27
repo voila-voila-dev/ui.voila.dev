@@ -1,5 +1,5 @@
 import type { Meta, StoryObj } from "@storybook/react-vite";
-import { Slider } from "@voila/ui";
+import { Slider } from "@voila/ui/slider";
 
 const meta: Meta<typeof Slider> = {
   title: "Primitives/Slider",

@@ -1,10 +1,10 @@
-import { ToggleGroup as BaseToggleGroup } from "@base-ui-components/react/toggle-group";
-import type { VariantProps } from "class-variance-authority";
+import { ToggleGroup as ToggleGroupPrimitive } from "@base-ui/react/toggle-group";
 import * as React from "react";
-import { Toggle, type toggleVariants } from "#components/toggle";
+import { Toggle } from "#components/toggle";
 import { cn } from "#lib/cn";
+import type { ToggleVariants } from "./toggle-variants";
 
-const ToggleGroupContext = React.createContext<VariantProps<typeof toggleVariants>>({
+const ToggleGroupContext = React.createContext<ToggleVariants>({
   size: "default",
   variant: "default",
 });
@@ -15,13 +15,19 @@ function Root({
   size,
   children,
   ...props
-}: React.ComponentProps<typeof BaseToggleGroup> & VariantProps<typeof toggleVariants>) {
+}: ToggleGroupPrimitive.Props & ToggleVariants) {
   return (
-    <BaseToggleGroup className={cn("flex items-center justify-center gap-1", className)} {...props}>
+    <ToggleGroupPrimitive
+      data-slot="toggle-group"
+      data-variant={variant}
+      data-size={size}
+      className={cn("flex items-center justify-center gap-1", className)}
+      {...props}
+    >
       <ToggleGroupContext.Provider value={{ variant, size }}>
         {children}
       </ToggleGroupContext.Provider>
-    </BaseToggleGroup>
+    </ToggleGroupPrimitive>
   );
 }
 
@@ -29,6 +35,7 @@ function Item({ className, variant, size, ...props }: React.ComponentProps<typeo
   const ctx = React.useContext(ToggleGroupContext);
   return (
     <Toggle
+      data-slot="toggle-group-item"
       variant={ctx.variant ?? variant}
       size={ctx.size ?? size}
       className={className}

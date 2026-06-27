@@ -1,5 +1,6 @@
 import type { Meta, StoryObj } from "@storybook/react-vite";
-import { Label, Switch } from "@voila/ui";
+import { Label } from "@voila/ui/label";
+import { Switch } from "@voila/ui/switch";
 
 const meta: Meta<typeof Switch> = {
   title: "Primitives/Switch",

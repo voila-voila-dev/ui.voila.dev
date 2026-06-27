@@ -1,5 +1,6 @@
 import type { Meta, StoryObj } from "@storybook/react-vite";
-import { Button, Card } from "@voila/ui";
+import { Button } from "@voila/ui/button";
+import { Card } from "@voila/ui/card";
 
 const meta: Meta = {
   title: "Primitives/Card",

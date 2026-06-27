@@ -1,5 +1,5 @@
 import type { Meta, StoryObj } from "@storybook/react-vite";
-import { Breadcrumb } from "@voila/ui";
+import { Breadcrumb } from "@voila/ui/breadcrumb";
 
 const meta: Meta = {
   title: "Primitives/Breadcrumb",

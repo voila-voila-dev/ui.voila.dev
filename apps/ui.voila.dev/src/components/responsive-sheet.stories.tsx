@@ -1,5 +1,8 @@
 import type { Meta, StoryObj } from "@storybook/react-vite";
-import { Button, Input, Label, ResponsiveSheet } from "@voila/ui";
+import { Button } from "@voila/ui/button";
+import { Input } from "@voila/ui/input";
+import { Label } from "@voila/ui/label";
+import { ResponsiveSheet } from "@voila/ui/responsive-sheet";
 
 const meta: Meta = {
   title: "Primitives/ResponsiveSheet",

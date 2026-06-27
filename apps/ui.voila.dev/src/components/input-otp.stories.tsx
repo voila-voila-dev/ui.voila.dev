@@ -1,5 +1,5 @@
 import type { Meta, StoryObj } from "@storybook/react-vite";
-import { InputOTP } from "@voila/ui";
+import { InputOTP } from "@voila/ui/input-otp";
 
 const meta: Meta = {
   title: "Primitives/InputOTP",

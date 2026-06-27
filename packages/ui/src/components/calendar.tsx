@@ -41,6 +41,9 @@ function Root({ className, classNames, showOutsideDays = true, ...props }: Calen
         ...classNames,
       }}
       components={{
+        Root: ({ className, rootRef, ...rest }) => (
+          <div data-slot="calendar" ref={rootRef} className={className} {...rest} />
+        ),
         Chevron: ({ orientation, ...rest }) =>
           orientation === "left" ? (
             <CaretLeftIcon className="h-4 w-4" {...rest} />

@@ -1,5 +1,5 @@
-import { Field } from "@base-ui-components/react/field";
-import { useRender } from "@base-ui-components/react/use-render";
+import { Field } from "@base-ui/react/field";
+import { useRender } from "@base-ui/react/use-render";
 import * as React from "react";
 import {
   Controller,
@@ -65,7 +65,7 @@ function Item({ className, ...props }: React.ComponentProps<typeof Field.Root>) 
   const id = React.useId();
   return (
     <FormItemContext.Provider value={{ id }}>
-      <Field.Root className={cn("space-y-2", className)} {...props} />
+      <Field.Root data-slot="form-item" className={cn("space-y-2", className)} {...props} />
     </FormItemContext.Provider>
   );
 }
@@ -73,7 +73,12 @@ function Item({ className, ...props }: React.ComponentProps<typeof Field.Root>) 
 function FormLabel({ className, ...props }: React.ComponentProps<"label">) {
   const { error, formItemId } = useFormField();
   return (
-    <Label className={cn(error && "text-destructive", className)} htmlFor={formItemId} {...props} />
+    <Label
+      data-slot="form-label"
+      className={cn(error && "text-destructive", className)}
+      htmlFor={formItemId}
+      {...props}
+    />
   );
 }
 
@@ -89,6 +94,7 @@ function Control({ ref, render, ...rest }: FormControlProps) {
     ref,
     render: render ?? <div />,
     props: {
+      "data-slot": "form-control",
       id: formItemId,
       "aria-describedby": !error ? formDescriptionId : `${formDescriptionId} ${formMessageId}`,
       "aria-invalid": !!error,
@@ -101,6 +107,7 @@ function Description({ className, ...props }: React.ComponentProps<"p">) {
   const { formDescriptionId } = useFormField();
   return (
     <p
+      data-slot="form-description"
       id={formDescriptionId}
       className={cn("text-[0.8rem] text-muted-foreground", className)}
       {...props}
@@ -114,6 +121,7 @@ function Message({ className, children, ...props }: React.ComponentProps<"p">) {
   if (!body) return null;
   return (
     <p
+      data-slot="form-message"
       id={formMessageId}
       className={cn("text-[0.8rem] font-medium text-destructive", className)}
       {...props}

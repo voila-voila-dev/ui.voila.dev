@@ -1,33 +1,54 @@
-import { PreviewCard } from "@base-ui-components/react/preview-card";
-import type * as React from "react";
+import { PreviewCard as PreviewCardPrimitive } from "@base-ui/react/preview-card";
 import { cn } from "#lib/cn";
 
 // Base UI calls this "PreviewCard"; shadcn uses "HoverCard". Same semantics.
 
-const Root = PreviewCard.Root;
-const Trigger = PreviewCard.Trigger;
+function Root({ ...props }: PreviewCardPrimitive.Root.Props) {
+  return <PreviewCardPrimitive.Root data-slot="hover-card" {...props} />;
+}
+
+function Trigger({ ...props }: PreviewCardPrimitive.Trigger.Props) {
+  return <PreviewCardPrimitive.Trigger data-slot="hover-card-trigger" {...props} />;
+}
 
 function Content({
   className,
   align = "center",
+  alignOffset,
+  side,
   sideOffset = 4,
+  positionerProps,
   ...props
-}: React.ComponentProps<typeof PreviewCard.Popup> & {
-  align?: React.ComponentProps<typeof PreviewCard.Positioner>["align"];
-  sideOffset?: React.ComponentProps<typeof PreviewCard.Positioner>["sideOffset"];
-}) {
+}: PreviewCardPrimitive.Popup.Props &
+  Pick<PreviewCardPrimitive.Positioner.Props, "align" | "alignOffset" | "side" | "sideOffset"> & {
+    // Escape hatch for the Positioner props not surfaced as dedicated props
+    // (collisionPadding, sticky, anchor, positionMethod, arrowPadding...).
+    positionerProps?: Omit<
+      PreviewCardPrimitive.Positioner.Props,
+      "align" | "alignOffset" | "side" | "sideOffset" | "children"
+    >;
+  }) {
+  const { className: positionerClassName, ...restPositionerProps } = positionerProps ?? {};
   return (
-    <PreviewCard.Portal>
-      <PreviewCard.Positioner align={align} sideOffset={sideOffset}>
-        <PreviewCard.Popup
+    <PreviewCardPrimitive.Portal>
+      <PreviewCardPrimitive.Positioner
+        align={align}
+        alignOffset={alignOffset}
+        side={side}
+        sideOffset={sideOffset}
+        className={positionerClassName}
+        {...restPositionerProps}
+      >
+        <PreviewCardPrimitive.Popup
+          data-slot="hover-card-content"
           className={cn(
-            "z-50 w-64 rounded-md border bg-popover p-4 text-popover-foreground shadow-md outline-none transition-all duration-200 data-[ending-style]:opacity-0 data-[starting-style]:opacity-0 data-[ending-style]:scale-95 data-[starting-style]:scale-95",
+            "z-50 w-64 rounded-md border bg-popover p-4 text-popover-foreground shadow-md outline-none transition-all duration-200 data-ending-style:opacity-0 data-starting-style:opacity-0 data-ending-style:scale-95 data-starting-style:scale-95",
             className,
           )}
           {...props}
         />
-      </PreviewCard.Positioner>
-    </PreviewCard.Portal>
+      </PreviewCardPrimitive.Positioner>
+    </PreviewCardPrimitive.Portal>
   );
 }
 

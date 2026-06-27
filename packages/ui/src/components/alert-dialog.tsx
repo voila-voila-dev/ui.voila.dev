@@ -1,17 +1,26 @@
-import { AlertDialog as BaseAlertDialog } from "@base-ui-components/react/alert-dialog";
+import { AlertDialog as AlertDialogPrimitive } from "@base-ui/react/alert-dialog";
 import type * as React from "react";
-import { Button, buttonVariants } from "#components/button";
+import { Button } from "#components/button";
 import { cn } from "#lib/cn";
 
-const Root = BaseAlertDialog.Root;
-const Trigger = BaseAlertDialog.Trigger;
-const Portal = BaseAlertDialog.Portal;
+function Root({ ...props }: AlertDialogPrimitive.Root.Props) {
+  return <AlertDialogPrimitive.Root data-slot="alert-dialog" {...props} />;
+}
 
-function Overlay({ className, ...props }: React.ComponentProps<typeof BaseAlertDialog.Backdrop>) {
+function Trigger({ ...props }: AlertDialogPrimitive.Trigger.Props) {
+  return <AlertDialogPrimitive.Trigger data-slot="alert-dialog-trigger" {...props} />;
+}
+
+function Portal({ ...props }: AlertDialogPrimitive.Portal.Props) {
+  return <AlertDialogPrimitive.Portal data-slot="alert-dialog-portal" {...props} />;
+}
+
+function Overlay({ className, ...props }: AlertDialogPrimitive.Backdrop.Props) {
   return (
-    <BaseAlertDialog.Backdrop
+    <AlertDialogPrimitive.Backdrop
+      data-slot="alert-dialog-overlay"
       className={cn(
-        "fixed inset-0 z-50 bg-black/80 transition-opacity duration-200 data-[ending-style]:opacity-0 data-[starting-style]:opacity-0",
+        "fixed inset-0 z-50 bg-black/80 transition-opacity duration-200 data-ending-style:opacity-0 data-starting-style:opacity-0",
         className,
       )}
       {...props}
@@ -19,13 +28,14 @@ function Overlay({ className, ...props }: React.ComponentProps<typeof BaseAlertD
   );
 }
 
-function Content({ className, ...props }: React.ComponentProps<typeof BaseAlertDialog.Popup>) {
+function Content({ className, ...props }: AlertDialogPrimitive.Popup.Props) {
   return (
     <Portal>
       <Overlay />
-      <BaseAlertDialog.Popup
+      <AlertDialogPrimitive.Popup
+        data-slot="alert-dialog-content"
         className={cn(
-          "fixed left-[50%] top-[50%] z-50 grid w-full max-w-lg translate-x-[-50%] translate-y-[-50%] gap-4 border bg-background p-6 shadow-lg transition-all duration-200 data-[ending-style]:opacity-0 data-[starting-style]:opacity-0 data-[ending-style]:scale-95 data-[starting-style]:scale-95 sm:rounded-lg",
+          "fixed left-[50%] top-[50%] z-50 grid w-full max-w-lg translate-x-[-50%] translate-y-[-50%] gap-4 border bg-background p-6 shadow-lg transition-all duration-200 data-ending-style:opacity-0 data-starting-style:opacity-0 data-ending-style:scale-95 data-starting-style:scale-95 sm:rounded-lg",
           className,
         )}
         {...props}
@@ -36,53 +46,74 @@ function Content({ className, ...props }: React.ComponentProps<typeof BaseAlertD
 
 function Header({ className, ...props }: React.ComponentProps<"div">) {
   return (
-    <div className={cn("flex flex-col space-y-2 text-center sm:text-left", className)} {...props} />
+    <div
+      data-slot="alert-dialog-header"
+      className={cn("flex flex-col space-y-2 text-center sm:text-left", className)}
+      {...props}
+    />
   );
 }
 
 function Footer({ className, ...props }: React.ComponentProps<"div">) {
   return (
     <div
+      data-slot="alert-dialog-footer"
       className={cn("flex flex-col-reverse sm:flex-row sm:justify-end sm:space-x-2", className)}
       {...props}
     />
   );
 }
 
-function Title({ className, ...props }: React.ComponentProps<typeof BaseAlertDialog.Title>) {
-  return <BaseAlertDialog.Title className={cn("text-lg font-semibold", className)} {...props} />;
+function Title({ className, ...props }: AlertDialogPrimitive.Title.Props) {
+  return (
+    <AlertDialogPrimitive.Title
+      data-slot="alert-dialog-title"
+      className={cn("text-lg font-semibold", className)}
+      {...props}
+    />
+  );
 }
 
-function Description({
-  className,
-  ...props
-}: React.ComponentProps<typeof BaseAlertDialog.Description>) {
+function Description({ className, ...props }: AlertDialogPrimitive.Description.Props) {
   return (
-    <BaseAlertDialog.Description
+    <AlertDialogPrimitive.Description
+      data-slot="alert-dialog-description"
       className={cn("text-sm text-muted-foreground", className)}
       {...props}
     />
   );
 }
 
-function Action({ className, ...props }: React.ComponentProps<typeof Button>) {
+function Action({
+  className,
+  variant = "default",
+  size = "default",
+  ...props
+}: AlertDialogPrimitive.Close.Props &
+  Pick<React.ComponentProps<typeof Button>, "variant" | "size">) {
   return (
-    <BaseAlertDialog.Close
-      render={(closeProps) => <Button {...closeProps} className={cn(className)} {...props} />}
+    <AlertDialogPrimitive.Close
+      data-slot="alert-dialog-action"
+      className={className}
+      render={<Button variant={variant} size={size} />}
+      {...props}
     />
   );
 }
 
-function Cancel({ className, ...props }: React.ComponentProps<"button">) {
+function Cancel({
+  className,
+  variant = "outline",
+  size = "default",
+  ...props
+}: AlertDialogPrimitive.Close.Props &
+  Pick<React.ComponentProps<typeof Button>, "variant" | "size">) {
   return (
-    <BaseAlertDialog.Close
-      render={(closeProps) => (
-        <button
-          {...closeProps}
-          className={cn(buttonVariants({ variant: "outline" }), "mt-2 sm:mt-0", className)}
-          {...props}
-        />
-      )}
+    <AlertDialogPrimitive.Close
+      data-slot="alert-dialog-cancel"
+      className={cn("mt-2 sm:mt-0", className)}
+      render={<Button variant={variant} size={size} />}
+      {...props}
     />
   );
 }

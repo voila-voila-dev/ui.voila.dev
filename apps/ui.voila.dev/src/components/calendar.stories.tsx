@@ -1,5 +1,5 @@
 import type { Meta, StoryObj } from "@storybook/react-vite";
-import { Calendar } from "@voila/ui";
+import { Calendar } from "@voila/ui/calendar";
 import { useState } from "react";
 
 const meta: Meta = {

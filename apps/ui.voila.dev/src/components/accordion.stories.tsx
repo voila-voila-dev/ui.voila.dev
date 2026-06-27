@@ -1,5 +1,5 @@
 import type { Meta, StoryObj } from "@storybook/react-vite";
-import { Accordion } from "@voila/ui";
+import { Accordion } from "@voila/ui/accordion";
 
 const meta: Meta = {
   title: "Primitives/Accordion",

@@ -1,5 +1,6 @@
 import type { Meta, StoryObj } from "@storybook/react-vite";
-import { Button, DropdownMenu } from "@voila/ui";
+import { Button } from "@voila/ui/button";
+import { DropdownMenu } from "@voila/ui/dropdown-menu";
 
 const meta: Meta = {
   title: "Primitives/DropdownMenu",

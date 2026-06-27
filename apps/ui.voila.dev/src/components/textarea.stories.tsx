@@ -1,5 +1,6 @@
 import type { Meta, StoryObj } from "@storybook/react-vite";
-import { Label, Textarea } from "@voila/ui";
+import { Label } from "@voila/ui/label";
+import { Textarea } from "@voila/ui/textarea";
 
 const meta: Meta<typeof Textarea> = {
   title: "Primitives/Textarea",

@@ -1,5 +1,5 @@
 import type { Meta, StoryObj } from "@storybook/react-vite";
-import { Table } from "@voila/ui";
+import { Table } from "@voila/ui/table";
 
 const meta: Meta = {
   title: "Primitives/Table",

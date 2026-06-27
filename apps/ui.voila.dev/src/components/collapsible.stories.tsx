@@ -1,5 +1,6 @@
 import type { Meta, StoryObj } from "@storybook/react-vite";
-import { Button, Collapsible } from "@voila/ui";
+import { Button } from "@voila/ui/button";
+import { Collapsible } from "@voila/ui/collapsible";
 import { CaretDownIcon } from "@voila/ui/icons";
 
 const meta: Meta = {

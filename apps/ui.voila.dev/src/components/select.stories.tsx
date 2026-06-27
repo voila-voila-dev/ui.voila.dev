@@ -1,5 +1,5 @@
 import type { Meta, StoryObj } from "@storybook/react-vite";
-import { Select } from "@voila/ui";
+import { Select } from "@voila/ui/select";
 
 const meta: Meta = {
   title: "Primitives/Select",
